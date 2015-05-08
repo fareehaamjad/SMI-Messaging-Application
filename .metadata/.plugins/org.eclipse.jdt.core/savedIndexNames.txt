@@ -1,0 +1,8 @@
+INDEX VERSION 1.126+C:\Users\fa45\Dropbox (NYU CTED Team)\smsSMI\.metadata\.plugins\org.eclipse.jdt.core
+2350354114.index
+15169512.index
+2157853732.index
+1284074322.index
+2297194317.index
+1613187800.index
+4229821188.index
