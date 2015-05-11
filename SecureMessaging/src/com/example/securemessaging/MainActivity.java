@@ -77,7 +77,7 @@ public class MainActivity extends Activity
 	static Context context;
 
 	//for analysis//////////////////////////////////////////////////
-	static boolean isDebugging = false;
+	static boolean isDebugging = true;
 	// Debugging
 	private static final String TAG = "Bluetooth";
 	private static final boolean D = true;
@@ -480,10 +480,10 @@ public class MainActivity extends Activity
 	}
 
 
-	private static void sendLongSMS(String msg, String to) 
+	static void sendLongSMS(String msg, String to) 
 	{
 		Logger.i("message to send:", msg);
-		msg = StringCompressor.compress(msg);
+		//msg = StringCompressor.compress(msg);
 		
 		SmsManager smsManager = SmsManager.getDefault();
 		ArrayList<String> parts = smsManager.divideMessage(msg); 
@@ -638,6 +638,7 @@ public class MainActivity extends Activity
 				//connectionText.setText("Connection established!");
 				MainActivity.dbHandler.addNewKey(msg.number, publicKeyOfSender);
 
+				Constants.number = msg.number;
 				Intent k = new Intent(context, SendReadSMS.class);
 				context.startActivity(k);
 			}
@@ -687,6 +688,7 @@ public class MainActivity extends Activity
 
 				//connectionText.setText("Connection established!");
 				MainActivity.dbHandler.addNewKey(msg.number, publicKey);
+				Constants.number = msg.number;
 				Intent k = new Intent(context, SendReadSMS.class);
 				context.startActivity(k);
 			}
@@ -699,6 +701,35 @@ public class MainActivity extends Activity
 			}
 
 
+		}
+		else
+		{
+			if (MainActivity.isDebugging)
+			{
+				byte [] b= (Constants.receivedMsg + "\n").getBytes();
+				MainActivity.mCommandService.write(b);
+			}
+			Log.i("got encrypted message", msg.message);
+			
+			String publicKey = dbHandler.getKey(msg.number);
+			
+			if (MainActivity.isDebugging)
+			{
+				byte [] b= (Constants.startDec + "\n").getBytes();
+				MainActivity.mCommandService.write(b);
+			}
+			
+			String message =  encryptionManager.decrypt(msg.message, publicKey);
+			
+			if (MainActivity.isDebugging)
+			{
+				byte [] b= (Constants.endDec + "\n").getBytes();
+				MainActivity.mCommandService.write(b);
+			}
+			
+			Toast.makeText(context, message , Toast.LENGTH_LONG).show();
+			
+			
 		}
 
 	}

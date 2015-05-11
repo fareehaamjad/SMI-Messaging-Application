@@ -11,6 +11,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 @SuppressLint("NewApi") 
 public class SendReadSMS extends FragmentActivity implements ActionBar.TabListener, TabListener {
@@ -109,6 +111,12 @@ public class SendReadSMS extends FragmentActivity implements ActionBar.TabListen
 	public void onTabReselected(android.app.ActionBar.Tab tab,
 			android.app.FragmentTransaction ft) {
 		// TODO Auto-generated method stub
+		
+	}
+	
+	public void sendSMS(View v) throws Exception
+	{
+		SendSMSFragment.sendMsg(this);
 		
 	}
 }

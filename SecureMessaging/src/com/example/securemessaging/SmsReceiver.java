@@ -51,7 +51,8 @@ public class SmsReceiver extends BroadcastReceiver
 			//Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
 			Message mesage = new Message();
 			mesage.number = number;
-			mesage.message = StringCompressor.decompress(msg);
+			//mesage.message = StringCompressor.decompress(msg);
+			mesage.message = msg;
 			
 			try {
 				
